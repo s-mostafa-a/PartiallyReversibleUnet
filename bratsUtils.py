@@ -24,26 +24,8 @@ def diceLoss(pred, target, nonSquared=False):
     return 1 - softDice(pred, target, nonSquared=nonSquared)
 
 def bratsDiceLoss(outputs, labels, nonSquared=False):
-
-    #bring outputs into correct shape
-    wt, tc, et = outputs.chunk(3, dim=1)
-    s = wt.shape
-    wt = wt.view(s[0], s[2], s[3], s[4])
-    tc = tc.view(s[0], s[2], s[3], s[4])
-    et = et.view(s[0], s[2], s[3], s[4])
-
-    # bring masks into correct shape
-    wtMask, tcMask, etMask = labels.chunk(3, dim=1)
-    s = wtMask.shape
-    wtMask = wtMask.view(s[0], s[2], s[3], s[4])
-    tcMask = tcMask.view(s[0], s[2], s[3], s[4])
-    etMask = etMask.view(s[0], s[2], s[3], s[4])
-
-    #calculate losses
-    wtLoss = diceLoss(wt, wtMask, nonSquared=nonSquared)
-    tcLoss = diceLoss(tc, tcMask, nonSquared=nonSquared)
-    etLoss = diceLoss(et, etMask, nonSquared=nonSquared)
-    return (wtLoss + tcLoss + etLoss) / 5
+    wtLoss = diceLoss(outputs, labels, nonSquared=nonSquared)
+    return 3 * wtLoss / 5
 
 def bratsDiceLossOriginal5(outputs, labels, nonSquared=False):
     outputList = list(outputs.chunk(5, dim=1))
