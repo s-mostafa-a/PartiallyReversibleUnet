@@ -144,7 +144,7 @@ class Segmenter:
             for i, data in enumerate(self.trainDataLoader):
 
                 #load data
-                inputs, pid, labels = data
+                inputs, labels = data
                 inputs, labels = inputs.to(self.device), labels.to(self.device)
 
                 #forward and backward pass
