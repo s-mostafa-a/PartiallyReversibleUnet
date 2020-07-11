@@ -144,7 +144,7 @@ class NoNewReversible(nn.Module):
         depth = 1
         self.levels = 5
 
-        self.firstConv = nn.Conv3d(4, CHANNELS[0], 3, padding=1, bias=False)
+        self.firstConv = nn.Conv3d(1, CHANNELS[0], 3, padding=1, bias=False)
         #self.dropout = nn.Dropout3d(0.2, True)
         self.lastConv = nn.Conv3d(CHANNELS[0], 3, 1, bias=True)
 
