@@ -13,7 +13,7 @@ class bcolors:
     WARNING = '\033[93m'
     ENDC = '\033[0m'
 
-def main():
+def main(tds, vds):
 
     # setup experiment logging to comet.ml
     if expConfig.LOG_COMETML:
@@ -36,14 +36,11 @@ def main():
 
     #load data
     randomCrop = expConfig.RANDOM_CROP if hasattr(expConfig, "RANDOM_CROP") else None
-    trainset = bratsDataset.BratsDataset(systemsetup.BRATS_PATH, expConfig, mode="train", randomCrop=randomCrop)
-    trainloader = torch.utils.data.DataLoader(trainset, batch_size=expConfig.BATCH_SIZE, shuffle=True, pin_memory=True, num_workers=expConfig.DATASET_WORKERS)
+    trainloader = torch.utils.data.DataLoader(tds, batch_size=expConfig.BATCH_SIZE, shuffle=True, pin_memory=True, num_workers=expConfig.DATASET_WORKERS)
 
-    valset = bratsDataset.BratsDataset(systemsetup.BRATS_PATH, expConfig, mode="validation")
-    valloader = torch.utils.data.DataLoader(valset, batch_size=1, shuffle=False, pin_memory=True, num_workers=expConfig.DATASET_WORKERS)
+    valloader = torch.utils.data.DataLoader(vds, batch_size=1, shuffle=False, pin_memory=True, num_workers=expConfig.DATASET_WORKERS)
 
-    challengeValset = bratsDataset.BratsDataset(systemsetup.BRATS_VAL_PATH, expConfig, mode="validation", hasMasks=False, returnOffsets=True)
-    challengeValloader = torch.utils.data.DataLoader(challengeValset, batch_size=1, shuffle=False, pin_memory=True, num_workers=expConfig.DATASET_WORKERS)
+    challengeValloader = torch.utils.data.DataLoader(vds, batch_size=1, shuffle=False, pin_memory=True, num_workers=expConfig.DATASET_WORKERS)
 
     seg = segmenter.Segmenter(expConfig, trainloader, valloader, challengeValloader)
     if hasattr(expConfig, "VALIDATE_ALL") and expConfig.VALIDATE_ALL:
@@ -52,6 +49,3 @@ def main():
         seg.makePredictions()
     else:
         seg.train()
-
-if __name__ == "__main__":
-    main()
