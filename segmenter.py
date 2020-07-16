@@ -215,7 +215,7 @@ class Segmenter:
             for i, data in enumerate(self.valDataLoader):
 
                 # feed inputs through neural net
-                inputs, _, labels = data
+                inputs, labels = data
                 inputs, labels = inputs.to(self.device), labels.to(self.device)
                 outputs = expConfig.net(inputs)
 
