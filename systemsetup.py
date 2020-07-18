@@ -6,7 +6,7 @@ BRATS_PATH = ""
 BRATS_VAL_PATH = ""
 
 #Define a location for checkpoints (with trailing slash)
-CHECKPOINT_BASE_PATH = "./check_point/"
+CHECKPOINT_BASE_PATH = "./drive/My\ Drive/"
 
 #Define a location for predictions (with trailing slash)
 PREDICTIONS_BASE_PATH = ""
