@@ -19,7 +19,7 @@ id = random.getrandbits(64)
 #LOG_COMETML_EXISTING_EXPERIMENT = ""
 
 #general settings
-SAVE_CHECKPOINTS = False #set to true to create a checkpoint at every epoch
+SAVE_CHECKPOINTS = True #set to true to create a checkpoint at every epoch
 EXPERIMENT_TAGS = ["bugfreeFinalDrop"]
 EXPERIMENT_NAME = "Reversible NO_NEW60, dropout"
 EPOCHS = 1000
